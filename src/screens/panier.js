@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Text,  ScrollView } from 'react-native'
+import { Text, ScrollView } from 'react-native'
 import readCart from '../utils/readCart'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled from 'styled-components'
@@ -46,9 +46,9 @@ const Panier = ({ route }) => {
       <ScrollView>
         {art.map(f => (
           <>
-          <ViewPanier>
+            <ViewPanier>
               <ImagesProducts urlImage={`${f.image}`} />
-            
+
               <ViewRightContainer>
                 <TextArticle>{f.title}</TextArticle>
                 <TextPrice>{f.price} $ </TextPrice>
@@ -61,12 +61,12 @@ const Panier = ({ route }) => {
                 </ThirdButton>
               </ViewRightContainer>
 
-            </ViewPanier>        
+            </ViewPanier>
           </>
         ))}
-         <SecondaryButton>
-             <SecondaryButtonText> Payer  </SecondaryButtonText> 
-            </SecondaryButton> 
+        <SecondaryButton>
+          <SecondaryButtonText> Payer  </SecondaryButtonText>
+        </SecondaryButton>
       </ScrollView>
     </>
   )

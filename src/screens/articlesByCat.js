@@ -1,11 +1,11 @@
 import axios from 'axios'
-import React, {useEffect, useState} from 'react'
-import { Text ,FlatList} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, FlatList } from 'react-native'
 import styled from 'styled-components'
 import readCart from '../utils/readCart'
 import addToCart from '../utils/addToCart'
 import removeFromCart from '../utils/removeFromCart'
-import  { PrimaryButton, SecondaryButton }  from '../components/button/buttonPrimary'
+import { PrimaryButton, SecondaryButton } from '../components/button/buttonPrimary'
 import { PrimaryButtonText } from '../components/texts'
 import ImagesProducts from '../components/imagesProducts'
 // import TextPrice from '../components/textPrice'
@@ -13,7 +13,7 @@ import { DescText, TextTitle, TextPrice } from '../components/texts'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Details = ({ route, navigation}) => {
+const Details = ({ route, navigation }) => {
   const [article, setArticle] = useState({})
   const { params: { category } } = route
   console.log('🚀 ~ file: details.js ~ line 8 ~ Details ~ categorie', category)
@@ -21,34 +21,33 @@ const Details = ({ route, navigation}) => {
     axios({
       method: 'GET',
       url: `https://fakestoreapi.com/products/category/${category}`,
-       params: {
+      params: {
         ts: 1,
-  
+
       }
     })
       .then(response => {
         setArticle(response.data)
-     })
-     .catch(error => {
+      })
+      .catch(error => {
         console.log(error)
-     })
- }, [])
-       
- console.log('article',article);
+      })
+  }, [])
 
- const checkPanier = async item => {
-  const allArt = await readCart()
 
-  const index = allArt.map(f => f.id).findIndex(itemId => itemId === item.id)
-  if (index === -1) {
-    addToCart(item)
-  } else {
-    removeFromCart(item)
+  const checkPanier = async item => {
+    const allArt = await readCart()
+
+    const index = allArt.map(f => f.id).findIndex(itemId => itemId === item.id)
+    if (index === -1) {
+      addToCart(item)
+    } else {
+      removeFromCart(item)
+    }
   }
-}
 
-    return (
-      <>
+  return (
+    <>
 
       <FlatList
         data={article}
@@ -58,36 +57,36 @@ const Details = ({ route, navigation}) => {
 
           <Button
             onPress={() => navigation.navigate('Details', { id: item.id })}
-            title = "voir plus"
+            title="voir plus"
           >
-      
-          <ImagesProducts
-             urlImage={`${item?.image}`} 
-          /> 
-          
-          <ViewRightContainer>
 
-           <TextArticle>{item?.title}</TextArticle>
-           <TextPrice>{item?.price} $ </TextPrice>
-           <PrimaryButton 
-               onPress={() => {
-                checkPanier(item)
-              }}
-            >
-            <PrimaryButtonText>Ajouter au panier <Icon name="shopping-cart"
-                    size={18} /></PrimaryButtonText>
-            </PrimaryButton> 
-            
-         </ViewRightContainer>
-        
-         </Button>
+            <ImagesProducts
+              urlImage={`${item?.image}`}
+            />
+
+            <ViewRightContainer>
+
+              <TextArticle>{item?.title}</TextArticle>
+              <TextPrice>{item?.price} $ </TextPrice>
+              <PrimaryButton
+                onPress={() => {
+                  checkPanier(item)
+                }}
+              >
+                <PrimaryButtonText>Ajouter au panier <Icon name="shopping-cart"
+                  size={18} /></PrimaryButtonText>
+              </PrimaryButton>
+
+            </ViewRightContainer>
+
+          </Button>
 
         )}
-        
-        /> 
-      
-      </>
-    )
+
+      />
+
+    </>
+  )
 
 
 

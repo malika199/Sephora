@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 
-import { ScrollView,View,Text , FlatList} from 'react-native'
+import { ScrollView, View, Text, FlatList } from 'react-native'
 import styled from 'styled-components'
 import axios from 'axios'
 import readCart from '../utils/readCart'
 import addToCart from '../utils/addToCart'
 import removeFromCart from '../utils/removeFromCart'
 import ImagesProducts from '../components/imagesProducts'
-import  { PrimaryButton, SecondaryButton }  from '../components/button/buttonPrimary'
+import { PrimaryButton, SecondaryButton } from '../components/button/buttonPrimary'
 import { PrimaryButtonText } from '../components/texts'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { DescText,TextArticle, TextTitle, TextPrice } from '../components/texts'
+import { DescText, TextArticle, TextTitle, TextPrice } from '../components/texts'
 
 const Article = ({ navigation }) => {
- 
+
   const [articles, setArticles] = useState([])
   const [offset, setOffset] = useState(0)
 
@@ -25,7 +25,7 @@ const Article = ({ navigation }) => {
         limit: 20,
         offset,
         ts: 1,
-      
+
       }
     })
       .then(response => {
@@ -49,49 +49,49 @@ const Article = ({ navigation }) => {
     }
   }
 
-  return(
+  return (
     <>
- 
-     
+
+
       <FlatList
         data={articles}
         showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id}    
+        keyExtractor={item => item.id}
         onEndReached={() => setOffset(offset + 20)}
-        renderItem={({ item }) => (  
-           
-            <Button
-              onPress={() => navigation.navigate('Details', { id: item.id })}
-              title = "voir plus"
-            >
+        renderItem={({ item }) => (
+
+          <Button
+            onPress={() => navigation.navigate('Details', { id: item.id })}
+            title="voir plus"
+          >
             <ImagesProducts
               urlImage={`${item.image}`}
             />
-          
-          <ViewRightContainer>
-            
-            <TextArticle>{item.title}</TextArticle>
-             <TextPrice> {item.price} $</TextPrice>
-             <PrimaryButton 
-               onPress={() => {
-                checkPanier(item)
-              }}
-            >
-            <PrimaryButtonText>Ajouter au panier <Icon name="shopping-cart"
-                    size={18} /></PrimaryButtonText>
-            </PrimaryButton> 
-            
-         </ViewRightContainer>
-           </Button>
 
-          
-         
+            <ViewRightContainer>
+
+              <TextArticle>{item.title}</TextArticle>
+              <TextPrice> {item.price} $</TextPrice>
+              <PrimaryButton
+                onPress={() => {
+                  checkPanier(item)
+                }}
+              >
+                <PrimaryButtonText>Ajouter au panier <Icon name="shopping-cart"
+                  size={18} /></PrimaryButtonText>
+              </PrimaryButton>
+
+            </ViewRightContainer>
+          </Button>
+
+
+
         )}
-      /> 
-      
-  </>
+      />
 
-)
+    </>
+
+  )
 
 }
 

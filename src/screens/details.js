@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import readCart from '../utils/readCart'
 import addToCart from '../utils/addToCart'
 import removeFromCart from '../utils/removeFromCart'
-import { Text, Image , ScrollView, View} from 'react-native'
+import { Text, Image, ScrollView, View } from 'react-native'
 
 import styled from 'styled-components'
 import { PrimaryButton, SecondaryButton } from '../components/button/buttonPrimary'
@@ -22,69 +22,68 @@ const Details = ({ route }) => {
     axios({
       method: 'GET',
       url: `https://fakestoreapi.com/products/${id}`,
-   
+
     })
       .then(response => {
         setArticle(response.data)
-     })
-     .catch(error => {
+      })
+      .catch(error => {
         console.log(error)
-     })
- }, [])
+      })
+  }, [])
 
- console.log('article',article);
- 
- const checkPanier = async item => {
-  const allArt = await readCart()
 
-  const index = allArt.map(f => f.id).findIndex(itemId => itemId === article.id)
-  if (index === -1) {
-    addToCart(article)
-  } else {
-    removeFromCart(article)
+  const checkPanier = async item => {
+    const allArt = await readCart()
+
+    const index = allArt.map(f => f.id).findIndex(itemId => itemId === article.id)
+    if (index === -1) {
+      addToCart(article)
+    } else {
+      removeFromCart(article)
+    }
   }
-}
-    return (
-      <>
+  return (
+    <>
       <ScrollView>
-        
-        <ImageDetails 
-         urlImage={`${article?.image}`} 
-        />
-       
-        <TextTitle> {article?.title}  </TextTitle> 
-        <DescText>{article?.description} </DescText> 
-        <TextPrice> Prix : {article?.price} $ </TextPrice>
-         <ViewP>
 
-        
-          
-           <PrimaryButton
-              onPress={() => {
-                checkPanier(article)
-              }}
-           >
-              <PrimaryButtonText> Ajouter au panier  </PrimaryButtonText> 
-            </PrimaryButton>
-            
-            
-           <SecondaryButton>
-             <SecondaryButtonText> Payer  </SecondaryButtonText> 
-            </SecondaryButton> 
-          </ViewP>
-        </ScrollView>
-      </>
-    )
+        <ImageDetails
+          urlImage={`${article?.image}`}
+        />
+
+        <TextTitle> {article?.title}  </TextTitle>
+        <DescText>{article?.description} </DescText>
+        <TextPrice> Prix : {article?.price} $ </TextPrice>
+        <ViewP>
+
+
+
+          <PrimaryButton
+            onPress={() => {
+              checkPanier(article)
+            }}
+          >
+            <PrimaryButtonText> Ajouter au panier  </PrimaryButtonText>
+          </PrimaryButton>
+
+
+          <SecondaryButton>
+            <SecondaryButtonText> Payer  </SecondaryButtonText>
+          </SecondaryButton>
+        </ViewP>
+      </ScrollView>
+    </>
+  )
 
 
 
 }
 
-  const ViewP = styled.View`
+const ViewP = styled.View`
   
     flexDirection: row;
     alignSelf:flex-end;
     marginLeft:10px;  `
 
-  
+
 export default Details
